@@ -3,6 +3,8 @@ import pandas as pd
 import warnings
 import pickle
 
+labelcolname = 'Encoded_Label'
+titlecolname = 'partyAffiliation'
 def prediction(xtest, ytest):
     pickleModel = "/content/gdrive/My Drive/Drifters/Models/Politcal_Affiliation_Model.pkl"
     pickle_in = open(pickleModel, "rb")
