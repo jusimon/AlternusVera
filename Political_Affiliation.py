@@ -1,32 +1,10 @@
-# coding: utf-8
-
-# ## Biased or SlantedNews detection Factor
-# #### This notebook is a subset of Biased_Factor.ipynb
-
-# In[1]:
-
-
 import numpy as np
 import pandas as pd
 import warnings
 import pickle
 from gensim.models.doc2vec import Doc2Vec
 
-from google.colab import drive
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-from google.colab import auth
-from oauth2client.client import GoogleCredentials
-# Authenticate and create the PyDrive client.
-auth.authenticate_user()
-gauth = GoogleAuth()
-gauth.credentials = GoogleCredentials.get_application_default()
-googleDrive = GoogleDrive(gauth)
-drive.mount('/content/gdrive')
-
-
-def prediction(xtest):
-    pickleModel = "/content/gdrive/My Drive/Drifters/Models/Politcal_Affiliation_Model.pkl"
+def prediction(pickleModel, xtest):
     data_pred=[]
     model= Doc2Vec.load(pickleModel)
     data_pred.append(model.infer_vector(xtest))
@@ -36,11 +14,11 @@ def prediction(xtest):
     return pred_conf[0][1]
 
 
-class PoliticalAffiliationDetection:
-    def __init__(self, xtest):
-        self.xtest = xtest
-    def predict(self):
-        return prediction(self.xtest)
+class Political_Affiliation:
+    def __init__(self, model):
+        self.model = model
+    def predict(self, xtest):
+        return prediction(model, xtest)
 
 
 
