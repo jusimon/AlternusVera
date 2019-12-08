@@ -1,7 +1,7 @@
 import warnings
 import pickle
 
-def prediction(xtest, ytest):
+def prediction(xtest):
     xtest = xtest.split(' ')
     pickleModel = "/content/gdrive/My Drive/Drifters/Models/Politcal_Affiliation_Model.pkl"
     pickle_in = open(pickleModel, "rb")
