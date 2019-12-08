@@ -2,23 +2,17 @@ import numpy as np
 import pandas as pd
 import warnings
 import pickle
-from gensim.models.doc2vec import Doc2Vec
 
-def prediction(pickleModel, xtest):
-    data_pred=[]
-    model= Doc2Vec.load(pickleModel)
-    data_pred.append(model.infer_vector(xtest))
-    lrg_pa = pickle.loads(pickleModel)
-    pred_conf=lrg_pa.predict_proba(data_pred)
-    #print(pred_conf)
-    return pred_conf[0][1]
-
+def prediction(xtest, ytest):
+    pickleModel = "/content/gdrive/My Drive/Drifters/Models/Politcal_Affiliation_Model.pkl"
+    pickle_in = open(pickleModel, "rb")
+    loadData = pickle.load(pickle_in)
+    return np.mean(loadData.predict(xtest) == ytest)
 
 class Political_Affiliation:
-    def __init__(self, model):
-        self.model = model
-    def predict(self, xtest):
-        return prediction(model, xtest)
-
-
-
+    def __init__(self, xtest):
+        self.x_test = xtest[titlecolname]
+        self.y_test = xtest[labelcolname]
+        self.x_test = self.x_test.replace(np.nan,'No Job Title', regex=True)
+    def predict(self):
+        return prediction(self.x_test, self.y_test)
